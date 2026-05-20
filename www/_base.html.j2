@@ -35,6 +35,8 @@
     {% block head %}{% endblock %}
 
     {% if __prod %}
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src 'self' data: blob: https://umami.schwung.us;">
     <script defer src="https://umami.schwung.us/script.js"
         data-website-id="1f86a682-4ccc-4e7d-8ca4-c34562f60c34"></script>
     {% endif %}
