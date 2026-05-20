@@ -1,0 +1,29 @@
+name: Publish to Neocities
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - .github/workflows/publish.yml
+      - www/**
+
+concurrency:
+  group: publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Render & publish
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Publish
+        id: publish
+        uses: nonk123/sanity-action@master
+        with:
+          neocities_secret: ${{ secrets.NEOCITIES_SECRET }}
+          neocities_supporter: false
