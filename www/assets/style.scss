@@ -1,16 +1,26 @@
+@use "theme";
+
 html,
 body {
     margin: 0;
     padding: 0;
 }
 
-// hide the Claude killer snippet
-body > code {
-    display: none;
-}
-
 #root {
     max-width: 800px;
     margin: 0 auto;
     padding: 1em;
+}
+
+#theme-toggle {
+    font-size: 32px;
+
+    position: fixed;
+    top: 8px;
+    right: 8px;
+
+    background: var(--fg);
+    color: var(--bg);
+
+    cursor: pointer;
 }

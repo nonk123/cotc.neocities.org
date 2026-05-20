@@ -1,0 +1,27 @@
+$dark: #12121c;
+$light: #fafafa;
+
+:root.light {
+    color-scheme: only light;
+    --bg: #{$light};
+    --fg: #{$dark};
+}
+
+:root:not(.light) {
+    color-scheme: only dark;
+    --bg: #{$dark};
+    --fg: #{$light};
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+}
+
+button {
+    border: 1px var(--fg) solid;
+    border-radius: 4px;
+
+    background: inherit;
+    color: inherit;
+}
