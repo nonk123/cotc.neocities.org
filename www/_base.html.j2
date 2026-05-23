@@ -67,6 +67,10 @@
             syncThemeWithView();
         }
 
+        function toggleSidebar() {
+            document.documentElement.classList.toggle("sidebar-open");
+        }
+
         document.addEventListener("DOMContentLoaded", syncThemeWithView);
     </script>
 
@@ -75,11 +79,19 @@
 
     {% if __prod %}<img style="position: fixed;" src="https://umami.schwung.us/p/hVj6pfqDq">{% endif %}
 
-    <div id="root">
+    <main id="content">
         {% block body required %}{% endblock %}
-    </div>
+    </main>
+
+    <nav id="sidebar">
+        <p>last updated: {{ last_updated }}</p>
+        <p>blah</p>
+        <p>blah</p>
+        <p>testing</p>
+    </nav>
 
     <button id="theme-toggle" onclick="toggleTheme()"></button>
+    <button id="sidebar-toggle" onclick="toggleSidebar()">▶️</button>
 </body>
 
 </html>

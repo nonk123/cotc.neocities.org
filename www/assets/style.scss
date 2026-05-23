@@ -1,4 +1,10 @@
 @use "theme";
+@use "const" as *;
+@use "mobile" as *;
+
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 html,
 body {
@@ -6,10 +12,66 @@ body {
     padding: 0;
 }
 
-#root {
-    max-width: 800px;
-    margin: 0 auto;
+body {
+    display: grid;
+
+    width: 100%;
+    min-height: 100vh;
+
+    grid-template-areas: "side root .";
+    grid-template-columns: 1fr $content-width 1fr;
+    grid-template-rows: auto;
+}
+
+#content {
+    grid-area: root;
     padding: 1em;
+}
+
+#sidebar {
+    grid-area: side;
+    max-width: $sidebar-preferred-width;
+}
+
+#sidebar-toggle {
+    display: none;
+}
+
+@include mobile {
+    body {
+        display: block;
+    }
+
+    #content {
+        margin: 0 auto;
+        max-width: $content-width;
+    }
+
+    #sidebar-toggle {
+        display: block;
+
+        font-size: 32px;
+
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+
+    #sidebar {
+        background: inherit;
+    }
+
+    :root.sidebar-open #sidebar {
+        display: block;
+
+        position: fixed;
+        left: 64px;
+        top: 0;
+    }
+
+    :root:not(.sidebar-open) #sidebar {
+        display: none;
+    }
 }
 
 #theme-toggle {
