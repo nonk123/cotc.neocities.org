@@ -14,14 +14,14 @@ $light: #fafafa;
 }
 
 body {
-    background: var(--bg);
     color: var(--fg);
+    background: var(--bg);
 }
 
 button {
     border: none;
     border-radius: 4px;
 
-    background: inherit;
-    color: inherit;
+    color: var(--bg);
+    background: var(--fg);
 }

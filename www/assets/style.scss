@@ -18,14 +18,24 @@ body {
     width: 100%;
     min-height: 100vh;
 
-    grid-template-areas: "side root .";
+    grid-template-areas:
+        "head head head"
+        "side root ."
+        "side foot .";
     grid-template-columns: 1fr $content-width 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: auto 1fr auto;
+}
+
+#header {
+    grid-area: head;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
 }
 
 #content {
     grid-area: root;
-    padding: 1em;
 }
 
 #sidebar {
@@ -33,13 +43,33 @@ body {
     max-width: $sidebar-preferred-width;
 }
 
+#header,
+#content,
+#sidebar,
+#footer {
+    padding: 1em;
+}
+
 #sidebar-toggle {
-    display: none;
+    visibility: hidden;
+}
+
+#footer {
+    grid-area: foot;
 }
 
 @include mobile {
     body {
-        display: block;
+        grid-template-areas:
+            "head"
+            "root"
+            "foot";
+        grid-template-columns: 1fr;
+    }
+
+    #header {
+        position: sticky;
+        top: 0;
     }
 
     #content {
@@ -47,14 +77,12 @@ body {
         max-width: $content-width;
     }
 
+    #footer {
+        margin-top: auto;
+    }
+
     #sidebar-toggle {
-        display: block;
-
-        font-size: 32px;
-
-        position: fixed;
-        left: 0;
-        top: 0;
+        visibility: visible;
     }
 
     #sidebar {
@@ -62,11 +90,7 @@ body {
     }
 
     :root.sidebar-open #sidebar {
-        display: block;
-
-        position: fixed;
-        left: 64px;
-        top: 0;
+        grid-area: root;
     }
 
     :root:not(.sidebar-open) #sidebar {
@@ -74,15 +98,30 @@ body {
     }
 }
 
-#theme-toggle {
-    font-size: 32px;
+$huge-butt-size: 42px;
 
-    position: fixed;
-    top: 8px;
-    right: 8px;
+.huge-butt {
+    display: inline-block;
 
-    background: var(--fg);
-    color: var(--bg);
+    width: $huge-butt-size;
+    height: $huge-butt-size;
 
+    font-size: 100%;
     cursor: pointer;
+}
+
+.borgir {
+    height: $huge-butt-size;
+    width: $huge-butt-size;
+
+    display: inline-flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.borgir > * {
+    width: 100%;
+    border-bottom: 3px solid var(--bg);
+    height: 1px;
 }
