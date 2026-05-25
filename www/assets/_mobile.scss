@@ -1,7 +1,7 @@
 @use "const" as *;
 
 @mixin mobile {
-    @media (max-width: #{$content-width + $sidebar-preferred-width}) {
+    @media (max-width: #{$content-width + 2 * $sidebar-preferred-width}) {
         @content;
     }
 }
