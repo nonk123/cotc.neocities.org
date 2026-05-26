@@ -101,7 +101,7 @@ body {
     }
 
     #sidebar {
-        max-height: max-content;
+        height: max-content;
         margin-left: $generic-padding;
 
         border: 1px solid var(--fg);
