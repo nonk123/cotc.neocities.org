@@ -122,12 +122,15 @@ body {
 $huge-butt-size: 42px;
 
 .huge-butt {
+    font-family: sans-serif;
+
     display: inline-block;
+    padding: 4px;
 
     width: $huge-butt-size;
     height: $huge-butt-size;
 
-    font-size: 100%;
+    font-size: $huge-butt-size / 2;
     cursor: pointer;
 }
 
