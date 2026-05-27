@@ -5,7 +5,7 @@ $light: #fafafa;
     color-scheme: only light;
     --bg: #{$light};
     --fg: #{$dark};
-    --accent: rgb(153, 116, 53);
+    --accent: rgb(123, 96, 53);
 }
 
 :root:not(.light) {
