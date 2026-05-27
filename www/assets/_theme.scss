@@ -5,12 +5,14 @@ $light: #fafafa;
     color-scheme: only light;
     --bg: #{$light};
     --fg: #{$dark};
+    --accent: rgb(153, 116, 53);
 }
 
 :root:not(.light) {
     color-scheme: only dark;
     --bg: #{$dark};
     --fg: #{$light};
+    --accent: rgb(205, 171, 63);
 }
 
 body {
@@ -24,4 +26,14 @@ button {
 
     color: var(--bg);
     background: var(--fg);
+}
+
+a {
+    color: var(--accent);
+    text-decoration-line: underline;
+    font-weight: normal;
+
+    &:hover {
+        color: var(--fg);
+    }
 }
