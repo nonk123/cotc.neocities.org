@@ -52,11 +52,12 @@ body {
     grid-area: side;
     max-width: $sidebar-preferred-width;
 
-    font-size: calc(min(1.2em, 24px));
+    font-size: calc(min(1.5em, 24px));
 
     & > * {
         display: block;
         text-decoration: none;
+        line-height: 32px;
     }
 }
 
@@ -67,12 +68,9 @@ body {
     margin: 0 auto;
 }
 
-#header,
-#content,
-#sidebar,
-#footer {
-    padding: $generic-padding;
+body > * {
     background: var(--bg);
+    padding: $generic-padding;
 }
 
 #sidebar-toggle {

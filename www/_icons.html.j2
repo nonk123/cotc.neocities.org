@@ -1,12 +1,10 @@
-{% set ICON_SIZE = "1em" %}
-
 {% macro si(name) %}
-<img style="height: {{ ICON_SIZE }};" src="https://cdn.simpleicons.org/{{ name }}?viewbox=auto" />
+<img class="icon" src="https://cdn.simpleicons.org/{{ name }}?viewbox=auto" />
 {% endmacro %}
 
 {% macro hi() %}
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-    style="height: {{ ICON_SIZE }};" class="hero-icon">
+    class="icon">
     {{ caller() }}
 </svg>
 {% endmacro %}
