@@ -14,6 +14,8 @@
 <link rel="{{ rel }}" type="image/png" sizes="{{ size }}" href="/assets/favicon-{{ size }}.png">
 {% endmacro %}
 
+{% import "_icons.html" as icons %}
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -94,14 +96,18 @@
     </main>
 
     <nav id="sidebar">
-        <p>blah</p>
-        <p>blah</p>
-        <p>testing</p>
+        {% macro link(icon, name, href) %}
+        <a target="_blank" href="{{ href }}">{{ icon }} {{ name }}</a>
+        {% endmacro %}
+
+        {{ link(icons.si("telegram"), "Telegram", "https://t.me/ConstellationOfTheCat") }}
+        {{ link(icons.si("instagram"), "Instagram", "https://www.instagram.com/ks_yikaydeg") }}
+        {{ link(icons.globe(), "Neocities Profile", "https://neocities.org/site/cotc") }}
     </nav>
 
     <footer id="footer">
         <section>Last updated: <strong>{{ last_updated }}</strong>.</section>
-        <section>Made with ❤️ by <a href="https://nonk.dev">nonk</a>.</section>
+        <section>Made with ❤️ by <a target="_blank" href="https://nonk.dev">nonk</a>.</section>
     </footer>
 </body>
 
