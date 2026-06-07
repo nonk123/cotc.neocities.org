@@ -1,18 +1,51 @@
 $dark: #12121c;
 $light: #fafafa;
 
-:root.light {
-    color-scheme: only light;
-    --bg: #{$light};
-    --fg: #{$dark};
-    --accent: rgb(123, 96, 53);
+$themes: (
+    light: (
+        bg: $light,
+        fg: $dark,
+        accent: rgb(123, 96, 53)
+    ),
+    dark: (
+        bg: $dark,
+        fg: $light,
+        accent: rgb(205, 171, 63)
+    )
+);
+
+@mixin generate-vars($theme-name) {
+    $theme-map: map-get($themes, $theme-name);
+
+    @each $key, $value in $theme-map {
+        --#{$key}: #{$value};
+    }
 }
 
-:root:not(.light) {
-    color-scheme: only dark;
-    --bg: #{$dark};
-    --fg: #{$light};
-    --accent: rgb(205, 171, 63);
+:root {
+    color-scheme: light dark;
+
+    @include generate-vars(light);
+
+    @media (prefers-color-scheme: dark) {
+        @include generate-vars(dark);
+    }
+
+    &[data-theme="light"] {
+        @include generate-vars(light);
+    }
+
+    &[data-theme="dark"] {
+        @include generate-vars(dark);
+    }
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
 }
 
 body {

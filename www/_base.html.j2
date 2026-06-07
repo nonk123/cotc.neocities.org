@@ -47,17 +47,23 @@
 
     <script>
         function isLightTheme() {
-            return localStorage.getItem("theme") === "light";
+            const stored = localStorage.getItem("theme");
+
+            if (stored)
+                return stored === "light";
+
+            const initialTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            return initialTheme === "light";
         }
 
         function syncThemeWithView() {
             const toggleButton = document.getElementById("theme-toggle");
 
             if (isLightTheme()) {
-                document.documentElement.classList.add("light");
+                document.documentElement.setAttribute("data-theme", "light");
                 toggleButton.textContent = "🌕";
             } else {
-                document.documentElement.classList.remove("light");
+                document.documentElement.setAttribute("data-theme", "dark");
                 toggleButton.textContent = "☀️";
             }
         }
