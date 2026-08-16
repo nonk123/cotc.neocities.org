@@ -1,19 +1,24 @@
 {% extends "_base.html" %}
 
-{% block what %}Convert cycles & iterations{% endblock %}
+{% block what %}Convert space dates{% endblock %}
 {% block url %}/cycles{% endblock %}
 {% block description %}{# TODO: describe #}{% endblock %}
 
 {% block body %}
-<h1>Convert cycles & iterations to Earth dates</h1>
+<h1>Convert space dates to Earth dates</h1>
 <p>TODO: describe usage.</p>
 
 <fieldset id="iterations">
-    <legend>Cycle and iteration to convert:</legend>
+    <legend>Space date to convert:</legend>
 
     <label>
         Cycle:
-        <input type="number" id="cycle" value="9444" oninput="convertIterationCycle()">
+        <input type="number" id="cycle" value="9444" oninput="convertSpaceDate()">
+    </label>
+    <br>
+    <label>
+        Hour:
+        <input type="number" id="hour" value="0" min="0" max="4095" oninput="convertSpaceDate()">
     </label>
 
     {% for iter in ["Ou", "Tonami", "Makoto", "De'a", "Omuan", "Sayoki", "Mau", "Mio-a-Phay", "Lamin", "Sawarim",
@@ -21,16 +26,17 @@
     <br>
     <label>
         <input type="radio" id="iter{{ loop.index0 }}" name="iter" value="{{ loop.index0 }}"
-            oninput="convertIterationCycle()">
+            oninput="convertSpaceDate()">
         {{ iter }}
     </label>
     {% endfor %}
+
 </fieldset>
 
 <fieldset>
-    <legend>Resulting Earth date:</legend>
-    <label>Start: <input type="date" id="startDate"></label><br>
-    <label>End: <input type="date" id="endDate"></label>
+    <legend>Resulting Earth interval:</legend>
+    <div>Start: <span id="startDate">...</span></div>
+    <div>End: <span id="endDate">...</span></div>
 </fieldset>
 
 <fieldset>
@@ -45,24 +51,31 @@
 {% block head %}
 <script>
     const iterCount = 18;
-    const iterSeconds = 182 * 24 * 60 * 60 * 1000;
-    const cycleSeconds = iterSeconds * iterCount;
+    const iterHours = 4096;
+
+    const iterMillis = 182 * 24 * 60 * 1000;
+    const cycleMillis = iterMillis * iterCount;
 
     function convertEarthDate() {
         const base = Date.parse("1964-03-08");
 
-        const timestamp = document.getElementById("convertDate").valueAsNumber - base;
+        let timestamp = document.getElementById("convertDate").valueAsNumber - base;
+        const cycle = Math.floor(timestamp / cycleMillis);
 
-        const cycle = Math.floor(timestamp / cycleSeconds);
-        const iter = Math.floor((timestamp - cycle * cycleSeconds) / iterSeconds);
+        timestamp -= cycle * cycleMillis;
+        const iter = Math.floor(timestamp / iterMillis);
+
+        timestamp -= iter * iterMillis;
+        const hour = Math.floor(timestamp * iterHours / iterMillis);
 
         document.getElementById("cycle").value = 9444 + cycle;
+        document.getElementById("hour").value = hour;
         document.getElementById(`iter${iter}`).checked = true;
 
-        convertIterationCycle();
+        convertSpaceDate();
     }
 
-    function convertIterationCycle() {
+    function convertSpaceDate() {
         const base = Date.parse("1964-03-08");
 
         const cycle = (parseInt(document.getElementById("cycle").value) - 9444);
@@ -75,11 +88,12 @@
             }
         }
 
-        const timestampStart = base + cycleSeconds * cycle + iterSeconds * iter;
-        const timestampEnd = timestampStart + iterSeconds - 1000;
+        iter += parseInt(document.getElementById("hour").value) / iterHours;
+        const timestampStart = base + cycleMillis * cycle + iterMillis * iter;
+        const timestampEnd = timestampStart + iterMillis - 1;
 
-        document.getElementById("startDate").valueAsNumber = new Date(timestampStart);
-        document.getElementById("endDate").valueAsNumber = new Date(timestampEnd);
+        document.getElementById("startDate").textContent = new Date(timestampStart).toString();
+        document.getElementById("endDate").textContent = new Date(timestampEnd).toString();
     }
 </script>
 {% endblock head %}
