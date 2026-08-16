@@ -5,12 +5,12 @@
 <html lang="{{ lang }}">
 
 {% macro stylesheet(path) %}
-<link rel="preload" href="{{ path }}" as="style">
-<link rel="stylesheet" href="{{ path }}">
+<link rel="preload" href="{{ path }}{{ nocache }}" as="style">
+<link rel="stylesheet" href="{{ path }}{{ nocache }}">
 {% endmacro %}
 
 {% macro favicon(size, rel = "icon") %}
-<link rel="{{ rel }}" type="image/png" sizes="{{ size }}" href="/assets/favicon-{{ size }}.png">
+<link rel="{{ rel }}" type="image/png" sizes="{{ size }}" href="/assets/favicon-{{ size }}.png{{ nocache }}">
 {% endmacro %}
 
 {% import "_icons.html" as icons %}
