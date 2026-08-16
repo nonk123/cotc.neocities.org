@@ -87,33 +87,39 @@
     {% if __prod %}<img style="position: fixed;" src="https://umami.schwung.us/p/hVj6pfqDq">{% endif %}
 
     <header id="header">
-        <button id="sidebar-toggle" class="borgir huge-butt" onclick="toggleSidebar()">
-            {% for i in range(3) %}<div></div>{% endfor %}
-        </button>
+        <div>
+            <button id="sidebar-toggle" class="borgir huge-butt" onclick="toggleSidebar()">
+                {% for i in range(3) %}<div></div>{% endfor %}
+            </button>
 
-        <a href="/">cat?</a>
+            <a href="/">cat?</a>
 
-        <button id="theme-toggle" class="huge-butt" onclick="toggleTheme()"></button>
+            <button id="theme-toggle" class="huge-butt" onclick="toggleTheme()"></button>
+        </div>
+
+        <div id="sidebar-hack">
+            <nav id="sidebar">
+                {% macro link(icon, name, href) %}
+                <a target="_blank" href="{{ href }}">{{ icon }} {{ name }}</a>
+                {% endmacro %}
+
+                {{ link(icons.si("telegram"), "Telegram", "https://t.me/ConstellationOfTheCat") }}
+                {{ link(icons.si("instagram"), "Instagram", "https://www.instagram.com/ks_yikaydeg") }}
+                {{ link(icons.globe(), "Neocities Profile", "https://neocities.org/site/cotc") }}
+            </nav>
+        </div>
     </header>
 
-    <main id="content">
-        {% block body required %}{% endblock %}
-    </main>
+    <div id="root">
+        <main id="content">
+            {% block body required %}{% endblock %}
+        </main>
 
-    <nav id="sidebar">
-        {% macro link(icon, name, href) %}
-        <a target="_blank" href="{{ href }}">{{ icon }} {{ name }}</a>
-        {% endmacro %}
-
-        {{ link(icons.si("telegram"), "Telegram", "https://t.me/ConstellationOfTheCat") }}
-        {{ link(icons.si("instagram"), "Instagram", "https://www.instagram.com/ks_yikaydeg") }}
-        {{ link(icons.globe(), "Neocities Profile", "https://neocities.org/site/cotc") }}
-    </nav>
-
-    <footer id="footer">
-        <section>Last updated: <strong>{{ last_updated }}</strong>.</section>
-        <section>Made with ❤️ by <a target="_blank" href="https://nonk.dev">nonk</a>.</section>
-    </footer>
+        <footer id="footer">
+            <section>Last updated: <strong>{{ last_updated }}</strong>.</section>
+            <section>Made with ❤️ by <a target="_blank" href="https://nonk.dev">nonk</a>.</section>
+        </footer>
+    </div>
 </body>
 
 </html>

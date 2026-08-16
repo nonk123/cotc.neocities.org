@@ -13,44 +13,82 @@ body {
 }
 
 body {
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 100vh;
+}
+
+#root {
+    flex-grow: 1;
+
     display: grid;
     overflow: auto;
 
     width: 100%;
-    min-height: 100vh;
 
     grid-template-areas:
-        "head head head"
-        "side root .   "
-        ".    root .   "
-        ".    .    .   "
-        ".    foot .   ";
-    grid-template-columns: $sidebar-preferred-width 1fr $sidebar-preferred-width;
-    grid-template-rows: auto auto auto 1fr auto;
+        "main"
+        ".   "
+        "foot";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+#header,
+#sidebar,
+#root > * {
+    background: var(--bg);
+    padding: $generic-padding;
+}
+
+#content,
+#footer {
+    width: 100%;
+    max-width: $content-width;
+    margin: 0 auto;
 }
 
 #header {
-    grid-area: head;
+    position: sticky;
+    top: 0;
 
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+    padding-bottom: 0; // handled by `#sidebar-hack`'s margin
+
+    & > div:first-child {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+
+    & > div:last-child {
+        margin-top: $generic-padding;
+        height: 0;
+    }
 }
 
 #footer {
+    grid-area: foot;
+
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: baseline;
+
+    padding-top: 0;
 }
 
 #content {
-    grid-area: root;
+    grid-area: main;
 }
 
 #sidebar {
-    grid-area: side;
+    position: absolute;
+
     max-width: $sidebar-preferred-width;
+    height: max-content;
+
+    border: 1px solid var(--fg);
+    border-radius: 8px;
 
     font-size: calc(min(1.5em, 24px));
 
@@ -61,65 +99,13 @@ body {
     }
 }
 
-#content,
-#footer {
-    width: 100%;
-    max-width: $content-width;
-    margin: 0 auto;
+:root.sidebar-open #sidebar {
+    position: relative;
+    top: 0;
 }
 
-body > * {
-    background: var(--bg);
-    padding: $generic-padding;
-}
-
-#sidebar-toggle {
-    visibility: hidden;
-}
-
-#footer {
-    grid-area: foot;
-}
-
-@include mobile {
-    body {
-        grid-template-areas:
-            "head"
-            "root"
-            ".   "
-            "foot";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
-    }
-
-    #header {
-        position: sticky;
-        top: 0;
-    }
-
-    #footer {
-        margin-top: auto;
-    }
-
-    #sidebar-toggle {
-        visibility: visible;
-    }
-
-    #sidebar {
-        height: max-content;
-        margin-left: $generic-padding;
-
-        border: 1px solid var(--fg);
-        border-radius: 8px;
-    }
-
-    :root.sidebar-open #sidebar {
-        grid-area: root;
-    }
-
-    :root:not(.sidebar-open) #sidebar {
-        display: none;
-    }
+:root:not(.sidebar-open) #sidebar {
+    display: none;
 }
 
 $huge-butt-size: 42px;
