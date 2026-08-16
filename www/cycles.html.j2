@@ -1,0 +1,85 @@
+{% extends "_base.html" %}
+
+{% block what %}Cycle & Iteration Calc{% endblock %}
+{% block url %}/cycles{% endblock %}
+{% block description %}{# TODO: describe #}{% endblock %}
+
+{% block body %}
+<h1>Cycle & Iteration to Earth Dates</h1>
+<p>TODO: describe usage.</p>
+
+<fieldset id="iterations">
+    <legend>Cycle and iteration to convert:</legend>
+
+    <label>
+        Cycle:
+        <input type="number" id="cycle" value="9444" oninput="convertIterationCycle()">
+    </label>
+
+    {% for iter in ["Ou", "Tonami", "Makoto", "De'a", "Omuan", "Sayoki", "Mau", "Mio-a-Phay", "Lamin", "Sawarim",
+    "Yalaqusha", "Exaquon", "Xin-daff", "Maduwan", "Yarxun", "Mathacune", "Mewbro", "Lim"] %}
+    <br>
+    <label>
+        <input type="radio" id="iter{{ loop.index0 }}" name="iter" value="{{ loop.index0 }}"
+            oninput="convertIterationCycle()">
+        {{ iter }}
+    </label>
+    {% endfor %}
+</fieldset>
+
+<fieldset>
+    <legend>Resulting Earth date:</legend>
+    <label>Start: <input type="date" id="startDate"></label><br>
+    <label>End: <input type="date" id="endDate"></label>
+</fieldset>
+
+<fieldset>
+    <legend>Convert Earth date to cycle and iteration:</legend>
+    <label>
+        Date:
+        <input type="date" id="convertDate" oninput="convertEarthDate()">
+    </label>
+</fieldset>
+{% endblock body %}
+
+{% block head %}
+<script>
+    const iterCount = 18;
+    const iterSeconds = 182 * 24 * 60 * 60 * 1000;
+    const cycleSeconds = iterSeconds * iterCount;
+
+    function convertEarthDate() {
+        const base = Date.parse("1964-03-08");
+
+        const timestamp = document.getElementById("convertDate").valueAsNumber - base;
+
+        const cycle = Math.floor(timestamp / cycleSeconds);
+        const iter = Math.floor((timestamp - cycle * cycleSeconds) / iterSeconds);
+
+        document.getElementById("cycle").value = 9444 + cycle;
+        document.getElementById(`iter${iter}`).checked = true;
+
+        convertIterationCycle();
+    }
+
+    function convertIterationCycle() {
+        const base = Date.parse("1964-03-08");
+
+        const cycle = (parseInt(document.getElementById("cycle").value) - 9444);
+
+        let iter = 0;
+
+        for (const radioButton of document.getElementsByName("iter")) {
+            if (radioButton.checked) {
+                iter = parseInt(radioButton.value);
+            }
+        }
+
+        const timestampStart = base + cycleSeconds * cycle + iterSeconds * iter;
+        const timestampEnd = timestampStart + iterSeconds - 1000;
+
+        document.getElementById("startDate").valueAsNumber = new Date(timestampStart);
+        document.getElementById("endDate").valueAsNumber = new Date(timestampEnd);
+    }
+</script>
+{% endblock head %}
