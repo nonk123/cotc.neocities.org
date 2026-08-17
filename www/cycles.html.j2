@@ -34,9 +34,19 @@
 </fieldset>
 
 <fieldset>
-    <legend>Resulting Earth interval:</legend>
-    <div>Start: <span id="startDate">...</span></div>
-    <div>End: <span id="endDate">...</span></div>
+    <legend>Resulting Earth time:</legend>
+    <table>
+        <tbody>
+            <tr>
+                <th>Without offset:</th>
+                <td id="now">...</td>
+            </tr>
+            <tr>
+                <th>+1 iteration:</th>
+                <td id="now+1iter">...</td>
+            </tr>
+        </tbody>
+    </table>
 </fieldset>
 
 <fieldset>
@@ -49,6 +59,13 @@
 {% endblock body %}
 
 {% block head %}
+<style>
+    th {
+        text-align: right;
+        vertical-align: baseline;
+    }
+</style>
+
 <script>
     const iterCount = 18;
     const iterHours = 4096;
@@ -89,11 +106,11 @@
         }
 
         iter += parseInt(document.getElementById("hour").value) / iterHours;
-        const timestampStart = base + cycleMillis * cycle + iterMillis * iter;
-        const timestampEnd = timestampStart + iterMillis - 1;
+        const now = base + cycleMillis * cycle + iterMillis * iter;
+        const iter1 = now + iterMillis - 1;
 
-        document.getElementById("startDate").textContent = new Date(timestampStart).toString();
-        document.getElementById("endDate").textContent = new Date(timestampEnd).toString();
+        document.getElementById("now").textContent = new Date(now).toString();
+        document.getElementById("now+1iter").textContent = new Date(iter1).toString();
     }
 </script>
 {% endblock head %}
